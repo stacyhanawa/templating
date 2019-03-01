@@ -10,7 +10,8 @@ def convert(file_path):
     return {
                 "filename": file_path,
                 "title": page_title,
-                "output": output
+                "output": output,
+                "output_filename": file_name
             }
 
 
@@ -34,6 +35,7 @@ def main():
         page_html = template.render(
             title = page['title'],
             content = index_html,
+            pages = pages
         )
         open(page['output'], "w+").write(page_html)
     
