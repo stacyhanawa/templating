@@ -36,9 +36,15 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           {% for page in pages %}
+          {% if page.output_filename == selected %}
+          <span class="currentpage">
+          {% endif %}
           <li class="nav-item">
             <a class="nav-link" href="{{ page.output_filename }}">{{ page.title }}</a>
           </li>
+          {% if page.output_filename == selected %}
+          </span>
+          {% endif %}
           {% endfor %}
         </ul>
       </div>

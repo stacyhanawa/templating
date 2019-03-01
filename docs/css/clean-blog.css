@@ -39,6 +39,11 @@ a:focus, a:hover {
   color: #212529;
 }
 
+
+.currentpage {
+  font-weight: bold;
+}
+
 blockquote {
   font-style: italic;
   color: #212529;
