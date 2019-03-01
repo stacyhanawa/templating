@@ -1,8 +1,7 @@
 import glob
-all_html_files = glob.glob("content/*.html")
-print(all_html_files)
 
 import os
+from jinja2 import Template
 
 def convert(file_path):
     file_name = os.path.basename(file_path)
@@ -14,35 +13,29 @@ def convert(file_path):
                 "output": output
             }
 
-pages = []
 
-for files in all_html_files:
-    result = convert(files)
-    pages.append(result)
-print(pages)
-
-
-
-
-
-def apply_template(template, page_title, file_name):
-    index_content = open(file_name).read()
-    finished_index_page = template.replace("{{content}}", index_content)
-    finished_index_page = finished_index_page.replace("{{title}}", page_title)
-    return finished_index_page
-    
-def print_page(template, page):
-    file_name = page['filename']
-    page_output = page['output']
-    page_title = page['title']
-    
-    page_html = apply_template(template, page_title, file_name)
-    open(page_output, "w+").write(page_html)
-    
 def main():
-    template = open("templates/base.html").read()
+    all_html_files = glob.glob("content/*.html")
+
+    pages = []
+
+    for files in all_html_files:
+        result = convert(files)
+        pages.append(result)
+
+
+
+    template_html = open("templates/base.html").read()
+    template = Template(template_html)
+
     for page in pages:
-        print_page(template, page)
+        file_path = page['filename']
+        index_html = open(file_path).read()
+        page_html = template.render(
+            title = page['title'],
+            content = index_html,
+        )
+        open(page['output'], "w+").write(page_html)
     
 if __name__ == "__main__":
     main()
